@@ -70,6 +70,7 @@ module.exports = {
     https: false,
     hotOnly: false,
     open: true, //配置自动启动浏览器
+    hot: true,
     proxy: {
       '/portal': {
         target: 'http://wap1.caiyun.feixin.10086.cn',
@@ -77,7 +78,7 @@ module.exports = {
           '^/portal': '/portal'
         }
       },
-      'market': {
+      '/market': {
         target: 'http://wap1.caiyun.feixin.10086.cn',
         pathRewrite: {
           '^/market': '/market'

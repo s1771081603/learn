@@ -28,7 +28,7 @@ readline.question(`输入新活动名称：`, (name) => {
   fs.writeFileSync(`${src}${name}/scss/index.scss`, fs.readFileSync(`${src}template/scss/index.scss`).toString().replace(/\$\{name\}/g, name));
   fs.writeFileSync(`${src}${name}/index.vue`, fs.readFileSync(`${src}template/index.vue`).toString().replace(/\$\{name\}/g, name));
   // 创建 service 文件
-  fs.writeFileSync(`${src}${name}/service/${name}Service.js`,`import axios from '@/services/xhr/index'
+  fs.writeFileSync(`${src}${name}/service/${name}Service.js`,`import axios from '@/services/index'
 import qs from 'qs'
 export default {
   createKlCodeInfo: params => axios.post("/portal/ajax/common/createKlCodeInfo.action",params,{
@@ -39,8 +39,7 @@ export default {
   }),
 }`);
   // 创建路由文件
-  fs.writeFileSync(`./src/router/map/${name}.js`, `
-export default [
+  fs.writeFileSync(`./src/router/map/${name}.js`, `export default [
   {
     path: '/${name}',
     name: '${name}',
