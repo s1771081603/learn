@@ -1,4 +1,4 @@
-# shopping_wrp_vue2
+# shopping_vue2
 
 ## Project setup
 ```
