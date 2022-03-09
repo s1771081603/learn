@@ -4,21 +4,36 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'history', // history hash
   base: process.env.BASE_URL,
   routes: [
     {
       path: '*',
-      redirect: 'index',
+      redirect: 'Home',
     },
     {
       path: '/',
-      redirect: 'index',
+      redirect: 'Home',
     },
     {
-      path: '/index',
-      name: 'index',
-      component: () => import('@/views/index.vue'),
+      path: '/Home',
+      name: 'Home',
+      component: () => import('@/views/Home/index.vue'),
+    },
+    {
+      path: '/ProductList',
+      name: 'ProductList',
+      component: () => import('@/views/ProductList/index.vue'),
+    },
+    {
+      path: '/ShoppingCart',
+      name: 'ShoppingCart',
+      component: () => import('@/views/ShoppingCart/index.vue'),
+    },
+    {
+      path: '/PersonalCenter',
+      name: 'PersonalCenter',
+      component: () => import('@/views/PersonalCenter/index.vue'),
     },
   ],
 });
