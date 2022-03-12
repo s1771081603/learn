@@ -1,0 +1,1 @@
+(()=>{var o={555:()=>{console.log("this is utils")}},r={};(function e(s){var t=r[s];if(void 0!==t)return t.exports;var i=r[s]={exports:{}};return o[s](i,i.exports,e),i.exports})(555),console.log("练习 Webpack")})();

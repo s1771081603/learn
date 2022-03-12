@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <title>JQUERY 发送 AJAX 请求</title>
+</head>
+<body>
+  <div class="container">
+    <h2 class="page-header">JQUERY 发送 AJAX 请求</h2><hr>
+    <button class="btn btn-primary">GET</button>
+    <button class="btn btn-danger">POST</button>
+    <button class="btn btn-info">通用型方法AJAX</button>
+  </div>
+  <script>
+    $('button').eq(0).click(function(){
+      $.get('URL',{a:100,b:200}, function(data){
+        // data 响应体
+      })
+    })
+    $('button').eq(0).click(function(){
+      $.post('地址 URL ',{a: '参数'}, function(data){
+        // data 响应体
+      }, '响应体的格式')
+    })
+    $('button').eq(0).click(function(){
+      $.ajax({
+        url: '',
+        data: {
+          name: '参数'
+        },
+        type: '请求类型 GET、POST...',
+        dataType: '响应体格式',
+        timeout: '超时时间',
+        headers: {
+          a: '头信息'
+        },
+        success: function(data){
+          // data 成功的回调
+        },
+        error: function(error) {
+          // error 失败的回调
+        }
+      });
+    })
+  </script>
+</body>
+</html>

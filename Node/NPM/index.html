@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <title>学习文档</title>
+</head>
+<body>
+  <div class="container">
+    <h2>认识 NPM</h2>
+    <ol>
+      <li>npm（全称 Node Package Manager，即 node 包管理器）</li>
+      <li>是 Node.js 默认的，以 JavaScript 编写的软件包管理系统</li>
+      <li>npm 来分享和使用代码已经成了前端的标配</li>
+      <li>官网：https://www.npmjs.com</li>
+      <li>npm 被全球超过一百万开发人员所依赖</li>
+      <li>拥有超过一百万个软件包，是世界上最大的软件注册表</li>
+    </ol>
+
+    <h2>NPM 的使用</h2>
+    <ol>
+      <li>npm -v 通过查看版本号，判断 npm 是否安装成功</li>
+      <li>npm install &lt;Module Name&gt; 使用 npm 命令安装模块，可以直接在命令行里使用</li>
+      <li>npm list -g 查看所有全局安装的模块</li>
+      <li>npm list vue 查看某个模块的版本号</li>
+      <li>npm -g install npm@5.9.1（@后面跟版本号）这样我们就可以更新 npm 版本</li>
+      <li>npm install --save moduleName  # --save 在 package 文件的 dependencies 节点写入依赖</li>
+      <li>npm install --save-dev moduleName # --save-dev 在 package 文件的 devDependencies 节点写入依赖</li>
+      <li>dependencies：运行时的依赖。发布后，即生产环境下还需要用的模块</li>
+      <li>devDependencies：开发时的依赖。里面的模块是开发时用的，发布时用不到他，比如项目中使用的 gulp ，压缩css，js 的模块。这些模块在我们的项目部署后是不需要的</li>
+    </ol>
+
+    <h2>Package.json 属性说明</h2>
+    <ol>
+      <li>name - 包名</li>
+      <li>version - 包的版本号</li>
+      <li>description - 包的描述</li>
+      <li>homepage - 包的官网 url</li>
+      <li>author - 包的作者姓名</li>
+      <li>contributors - 包的其他贡献者姓名</li>
+      <li>dependencies - 依赖包列表。如果依赖包没有安装，npm 会自动将依赖包安装在 node_module 目录下。</li>
+      <li>repository - 包代码存放的地方的类型，可以是 git 或 svn，git 可以在 github 上。</li>
+      <li>main - main 字段指定了程序的入口文件，require（`moduleName`）就会加载这个文件。这个字段的默认值是模块根目录下的 index.js。</li>
+      <li>keywords - 关键字</li>
+      <li>
+        package.json 文件中版本号的说明，安装的时候代表不同的含义：
+        <ol>
+          <li>"5.0.3" 表示安装指定 5.0.3 版本</li>
+          <li>"~5.0.3" 表示安装 5.0.X 中最新版本</li>
+          <li>"^5.0.3" 表示安装 5.X.X 中最新版本</li>
+        </ol>
+      </li>
+    </ol>
+
+    <h2>包的使用</h2>
+    <ol>
+      <li>CommonJS 中很大的一部分便是对模块系统化的规范</li>
+      <li>使用 require 语句导入包</li>
+      <li>新的 ES6 可以使用 import 导入包</li>
+    </ol>
+  </div>
+</body>
+</html>
