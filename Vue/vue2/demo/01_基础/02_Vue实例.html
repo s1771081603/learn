@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue实例</title>
+  <script src="../vue.js"></script>
+</head>
+<body>
+  <div id="root">
+    <p>{{ a }}</p>
+    <h1>vue 实例的生命周期</h1>
+    <p> vue实例的生命周期指的是：从Vue实例创建，运行，到销毁期间，会伴随着各种各样的事件，这些事件统称为生命周期。<br>生命周期事件，也称生命周期函数，也称生命周期钩子。 </p>
+    <ul>
+      <li>beforeCreate：实例被创建之前。这时 data 和 methods 中的数据都还没有初始化，在这里调用 data 和 methods 的数据会报错。</li>
+      <li>created：实例已经在内存中创建完成。此时 data 和 methods 已经创建完成。此时还没开始编译模板。</li>
+      <li>beforeMount：此时已经完成了模板编译，但是还没有从内存挂载到页面中。</li>
+      <li>mounted：此时已经将编译好的模板，挂载到了页面指定的容器中显示。</li>
+      <li>beforeUpdate：data数据更新之后，但是还未渲染到页面时执行的函数。这时data数据已经更新，但是页面的数据还是旧的。</li>
+      <li>updated：updated 事件执行的时候，页面和 data 数据已经保持同步了，都是最新的。</li>
+      <li>beforeDestroy：实例销毁之前调用。在这一步，实例上的data，methods等仍然完全可用。</li>
+      <li>destroyed：Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，所有的子实例也会被销毁。</li>
+    </ul>
+  </div>
+  <script>
+    let obj = { a: 1};
+    // Object.freeze(obj); // 设置为只读属性
+    const vm = new Vue({
+      el: '#root',
+      data: obj,
+      created(){
+        console.log('实例创建时 a 的值：' + this.a);
+      }
+    });
+    vm.$watch('a', function (newValue, oldValue) {
+      // 这个回调将在 `vm.a` 改变后调用   newValue（改变后的值） oldValue（改变前的值）
+      console.log('更新后的值（newValue）：' + newValue);
+      console.log('更新前的值（oldValue）：' + oldValue);
+    })
+    vm.a = 2;
+    console.log(obj.a);
+    obj.a = 5;
+    console.log(vm.a);
+    console.log(vm.$data === obj); // => true
+    console.log(vm.$el === document.getElementById('root')); // => true
+  </script>
+</body>
+</html>
