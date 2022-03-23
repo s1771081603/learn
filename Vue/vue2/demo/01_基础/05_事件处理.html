@@ -4,12 +4,48 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Class 和 Style</title>
+  <title>事件处理</title>
   <script src="../vue.js"></script>
 </head>
 <body>
   <div id="root">
     <img src="../images/EventsModify.jpg" alt="事件修饰符" title="事件修饰符">
+    <!-- 阻止单击事件继续传播 -->
+    <a @click.stop="doThis"></a>
+
+    <!-- 提交事件不再重载页面 -->
+    <form @submit.prevent=""></form>
+
+    <!-- 修饰符可以串联 -->
+    <a @click.stop.prevent=""></a>
+
+    <!-- 只有修饰符 -->
+    <form @submit.prevent></form>
+
+    <!-- 添加事件监听器时使用事件捕获模式 -->
+    <!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 -->
+    <div @click.capture="">...</div>
+
+    <!-- 只当在 event.target 是当前元素自身时触发处理函数 -->
+    <!-- 即事件不是从内部元素触发的 -->
+    <div @click.self="">...</div>
+
+    <!-- 点击事件将只会触发一次 -->
+    <a v-on:click.once=""></a>
+
+    <!-- 滚动事件的默认行为 (即滚动行为) 将会立即触发 -->
+    <!-- 而不会等待 `onScroll` 完成  -->
+    <!-- 这其中包含 `event.preventDefault()` 的情况 -->
+    <div v-on:scroll.passive="">...</div>
+
+    <!-- 只有在点击 `key` 是 `Enter` 时调用 `vm.submit()` -->
+    <input v-on:keyup.enter="">
+
+    <!-- 处理函数只会在 $event.key 等于 PageDown 时被调用。 -->
+    <input v-on:keyup.page-down="">
+    <input v-on:keyup.13="">
+    .enter<br> .tab<br> .delete (捕获“删除”和“退格”键)<br> .esc<br> .space<br> .up<br> .down<br> .left<br> .right<br> ......<br>
+
   </div>
   <script>
     let vm = new Vue({
