@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  </head>
+  <body>
+    <h1>1、什么是AJAX？</h1>
+    <p>
+      AJAX = 异步 JavaScript 和 XML。<br>
+      AJAX是一种创建快速动态网页的技术。<br>
+      通过后台跟服务器进行少量的数据交换，AJAX可以使网页实现异步更新。这意味着可以在不重新加载整个网页的情况下对网页的某部分进行更新。<br>
+      传统网页（不适用AJAX）如果需要更新内容，必须重新加载整个网页面。<br>
+      有很多使用AJAX的应用程序案例：新浪微博、Google地图、开心网等等。
+    </p>
+    <button onclick="sendGET()">发送get请求</button>
+    <button onclick="sendPOST()">发送post请求</button>
+    <div id="myDiv"></div>
+  </body>
+  <script>
+    function sendGET(){
+      // 创建 XMLHttpRequest 对象
+      let xmlhttp = new XMLHttpRequest();
+      /**
+       * onreadystatechange 事件
+       * 当请求被发送到服务器时，我们需要执行一些基于响应的任务。
+       * 每当 readyState 改变时，就会触发 onreadystatechange 事件。
+       * readyState 属性存有 XMLHttpRequest 的状态信息。
+       * 下面是 XMLHttpRequest 对象的三个重要的属性：
+       * onreadystatechange 存储函数（或函数名），每当 readyState 属性改变时，就会调用该函数。
+      */
+      xmlhttp.onreadystatechange = function(){
+        /**
+         * readyState   存有 XMLHttpRequest 的状态。从 0 到 4 发生变化。
+         *              0: 请求未初始化
+         *              1: 服务器连接已建立
+         *              2: 请求已接收
+         *              3: 请求处理中
+         *              4: 请求已完成，且响应已就绪
+         * status       200: "OK"
+         *              404: 未找到页面
+        */
+        if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+            console.log(JSON.parse(xmlhttp.responseText))
+        }
+      }
+      /**
+       * AJAX - 向服务器发送请求
+       * open(method,url,async)
+       *    method：请求的类型；GET 或 POST
+       *    url：文件在服务器上的位置
+       *    async：true（异步）或 false（同步）
+      */
+      xmlhttp.open("GET","https://api.shop.eduwork.cn/api/index",true);
+      // send(string)   string：仅用于 POST 请求
+      xmlhttp.send();
+    }
+    function sendPOST(){
+      let xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function(){
+        if(xmlhttp.readyState==4 && xmlhttp.status==200){
+          console.log(xmlhttp)
+        }
+      }
+      xmlhttp.open("POST","https://api.shop.eduwork.cn/api/index",true);
+      xmlhttp.send(
+        JSON.stringify(
+          {}
+        )
+      );
+    }
+  </script>
+</html>
