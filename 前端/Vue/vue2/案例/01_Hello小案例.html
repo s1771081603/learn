@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <title>Document</title>
+  <script src="../vue.js"></script>
+</head>
+<body>
+  <!-- 
+    初识Vue：
+      1、想让Vue工作，就必须创建一个Vue实例，且要传入一个配置对象
+      2、root容器里的代码依然符合html规范，只不过混入了一些特殊的Vue语法
+      3、root容器里的代码被称为Vue模板
+
+      注意区分js表达式和js代码（语句）
+        1、表达式：一个表达式会生成一个值、可以放在任何需要值的地方
+          1. a
+          2. b
+          3. a+b
+          4. a === b ? a : b
+      
+        2、js代码（语句）
+          1. if(){}
+          2. for(){}
+   -->
+  <div id="app">
+    <h1>{{ massage }}</h1>
+    <p>我的名字是：{{ name }}</p>
+    <p>我的年龄是：{{ age }}</p>
+    <p>当前时间戳：{{ new Date().getTime() }}</p>
+  </div>
+  <script type="text/javascript">
+    Vue.config.productionTip = false; // 阻止Vue在启动时生成生产提示
+
+    // 创建一个vue实例
+    const vm = new Vue({
+      // el 用于指定当前Vue实例为哪个容器服务，值通常为css选择器。
+      el: '#app',
+      // data中用于存储数据,数据提供给el指定的容器去使用。
+      data(){
+        return {
+          massage: 'hello，vue2',
+          age: '24',
+          name: 'songlisheng'
+        }
+      }
+    })
+  </script>
+</body>
+</html>

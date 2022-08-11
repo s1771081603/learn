@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全局API</title>
+  <script src="../../vue.js"></script>
+</head>
+<body>
+  <div id="app01"></div>
+  <div id="app02">
+    <input type="text" v-model="msg">
+    <h1>{{msg|capitalize}}</h1>
+    <ul>
+      <li v-for="(item,index) in items" :key="index">
+        {{ item }}
+      </li>
+    </ul>
+    <p v-demo="items" style="word-break:break-word;"></p>
+  </div>
+  <div id="app03">
+
+  </div>
+  <div id="app04"></div>
+  <div id="app05"></div>
+  <div id="app06"></div>
+  <div id="app07"></div>
+  <div id="app08"></div>
+  <script>
+    Vue.config.productionTip = false;
+
+    // 使用基础 Vue 构造器，创建一个子类。参数是一个包含组件选项的对象。
+    // 注册或获取全局指令。
+    Vue.directive('demo', {
+      // 钩子函数
+      // 只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+      bind(el,binding,VNode){
+        let s = JSON.stringify
+        el.innerHTML = `
+          name:${s(binding.name)}<br>
+          value:${s(binding.value)}<br>
+          expression:${s(binding.expression)}<br>
+          arg:${s(binding.arg)}<br>
+          modifiers:${s(binding.modifiers)}<br>
+          VNode keys:${Object.keys(VNode).join(',')}<br>
+        `
+      },
+      // 被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+      inserted() {},
+      // 所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新 (详细的钩子函数参数见下)。
+      update(){},
+      // 指令所在组件的 VNode 及其子 VNode 全部更新后调用。
+      componentUpdated(){},
+      // 只调用一次，指令与元素解绑时调用。
+      unbind(){},
+    })
+
+    // Vue.js 允许你自定义过滤器，可被用于一些常见的文本格式化。过滤器可以用在两个地方：双花括号插值和 v-bind 表达式 (后者从 2.1.0+ 开始支持)。过滤器应该被添加在 JavaScript 表达式的尾部，由“管道”符号指示
+    Vue.filter('capitalize', function (value) {
+      if (!value) return ''
+      value = value.toString()
+      return value.charAt(0).toUpperCase() + value.slice(1)
+    })
+
+    // 安装 Vue.js 插件。如果插件是一个对象，必须提供 install 方法。如果插件是一个函数，它会被作为 install 方法。install 方法调用时，会将 Vue 作为参数传入。
+    Vue.use( 'plugin' )
+
+    // 全局注册一个混入，影响注册之后所有创建的每个 Vue 实例。插件作者可以使用混入，向组件注入自定义的行为。不推荐在应用代码中使用。
+    Vue.mixin( 'mixin' )
+
+    // 将一个模板字符串编译成 render 函数。只在完整版时可用。(渲染函数)
+    Vue.compile( '<div><span>{{ msg }}</span></div>' )
+
+    // 让一个对象可响应。Vue 内部会用它来处理 data 函数返回的对象。
+    // 返回的对象可以直接用于渲染函数和计算属性内，并且会在发生变更时触发相应的更新。也可以作为最小化的跨组件状态存储器，用于简单的场景：
+    const state = Vue.observable({ count: 0 })
+
+    const Demo = {
+      render(h) {
+        return h('button', {
+          on: { click: () => { state.count++ }}
+        }, `count is: ${state.count}`)
+      }
+    }
+
+    // 提供字符串形式的 Vue 安装版本号。这对社区的插件和组件来说非常有用，你可以根据不同的版本号采取不同的策略。
+    var version = Number(Vue.version.split('.')[0])
+    if (version === 2) {
+      // Vue v2.x.x
+    } else if (version === 1) {
+      // Vue v1.x.x
+    } else {
+      // Unsupported versions of Vue
+    }
+
+    // 使用基础 Vue 构造器，创建一个“子类”。参数是一个包含组件选项的对象。
+    // data 选项是特例，需要注意 - 在 Vue.extend() 中它必须是函数
+    const extends01 = Vue.extend({
+      template: `<p>{{firstName}} {{alias}} {{lastName}}</p>`,
+      data() {
+        return {
+          firstName: 'songlihseng',
+          lastName: 'cailu',
+          alias: 'love'
+        }
+      },
+    })
+    new extends01().$mount('#app01');
+
+    // 注册组件，传入一个扩展过的构造器
+    Vue.component('my-component', extends01)
+
+    // 注册组件，传入一个选项对象 (自动调用 Vue.extend)
+    Vue.component('my-component', { /* ... */ })
+
+    // 获取注册的组件 (始终返回构造器)
+    var MyComponent = Vue.component('my-component')
+
+    // 执行延迟回调
+    const vm01 = new Vue({
+      data() {
+        return {
+          msg: 'hello',
+          items: ['a', 'b', 'c'],
+        }
+      },
+      beforeUpdate() {
+        this.$nextTick(function () {
+          console.log('Dom 更新时——延迟执行');
+        });
+        console.log('Dom 更新时');
+      },
+    }).$mount('#app02')
+
+    // 向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的，且触发视图更新。
+    // 它必须用于向响应式对象上添加新 property，因为 Vue 无法探测普通的新增 property (比如 this.myObject.newProperty = 'hi')
+    Vue.set(vm01.items, vm01.items.length, 'value')
+
+    // 删除对象的 property。如果对象是响应式的，确保删除能触发更新视图。
+    // 这个方法主要用于避开 Vue 不能检测到 property 被删除的限制，但是你应该很少会使用它。
+    Vue.delete(vm01.items, vm01.items.length-1)
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<script src="../vue.js"></script>
+<body>
+  <div id="app">
+    <h1>你好，{{name}}</h1>
+  </div>
+  <script>
+    Vue.config.productionTip = false; // 组织vue在启动时生成生产提示。
+    
+    let vm = new Vue({
+      // el: '#app',
+      // data的第一种写法：对象
+      data: {
+        name: 'songlisheng',
+      },
+      // data的第二种写法：函数
+      // data(){
+      //   return{
+      //     name: 'songlisheng',
+      //   }
+      // }
+    });
+    setTimeout(() => {
+      vm.$mount('#app')
+    }, 2000)
+  </script>
+</body>
+</html>

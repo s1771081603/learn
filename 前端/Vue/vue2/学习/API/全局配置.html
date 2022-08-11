@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全局配置</title>
+  <script src="../../vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>全局配置</h1>
+    <p>{{name}}</p>
+  </div>
+  <script>
+    // 是否取消Vue所有的日志和警告
+    Vue.config.silent = false;
+
+    // 自定义合并策略的选项。
+    // 合并策略选项分别接收在父实例和子实例上定义的该选项的值作为第一个和第二个参数，Vue 实例上下文被作为第三个参数传入。
+    // 参考自定义选项的混入策略
+    Vue.config.optionMergeStrategies = (parent, child, vm) => {
+      return parent + child + vm
+    };
+
+    // 是否允许 vue-devtools 检查代码
+    Vue.config.devtools = false;
+
+    // 指定组件的渲染和观察期间未捕获错误的处理函数。这个处理函数被调用时，可获取错误信息和 Vue 实例。
+    Vue.config.errorHandler = (err, vm, info) => {
+      // handle error
+       // info 是 Vue 特定的错误信息，比如错误所在的生命周期钩子
+      return console.error(err)
+    };
+
+    // 为 Vue 的运行时警告赋予一个自定义处理函数。注意这只会在开发者环境下生效，在生产环境下它会被忽略。
+    Vue.config.warnHandler = (msg, vm, trace) => {
+      // handle warn
+      // trace 是组建的继承关系追踪
+    }
+
+    // 必须使 Vue 忽略在 Vue 之外的自动以元素（e.g 使用了 web components APIs）。
+    // 否则，它会假设你忘记注册全局组件或者拼错了组件名从而抛出一个 Unknown custom element 的警告。
+    Vue.config.ignoredElements = [
+      '自定义元素名',
+      /^icon-/, // 用正则忽略所有icon开头的元素
+    ]
+
+    // 给 v-on 自定义键位别名
+    Vue.config.keyCodes = {
+      // camelCase won`t work
+      v: 86,
+      f1: 112,
+      // camelCase 不可用
+      mediaPlayPause: 179,
+      // 取而代之的是 kebab-case 且用双引号括起来
+      'media-play-pause': 179,
+      up: [38, 87]
+    }
+
+    // 设置为 true 以在浏览器开发工具的性能/时间线面板中启用对组件初始化、编译、渲染和打补丁的性能追踪。
+    // 只适用于开发模式和支持 performance.mark API的浏览器上。
+    Vue.config.performance = true;
+
+    // 设置为 false 以阻止 Vue 在启动时生成生产提示
+    Vue.config.productionTip = true;
+
+    new Vue({
+      data(){
+        return{
+          name: 'songlisheng'
+        }
+      },
+    }).$mount('#app');
+    
+  </script>
+</body>
+</html>
