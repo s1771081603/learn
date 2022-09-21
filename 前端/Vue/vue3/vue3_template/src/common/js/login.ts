@@ -66,6 +66,8 @@ export default {
                 } else {
                     this.getAccount2();
                 }
+            }).catch(()=>{
+                this.getAccountCallback();
             });
     },
     //和彩云单点
@@ -101,7 +103,9 @@ export default {
                 this.getAccount2();
                 return;
             }
-            this.accountDecrypt(data.result, this.judgeLoginType());
+            this.accountDecrypt(data.result, true);
+        }).catch(()=>{
+            this.getAccountCallback();
         });
     },
     getAccount2() {
@@ -124,6 +128,8 @@ export default {
                  * 新增loginType字段（统一认证单点埋点）
                  */
                 this.accountDecrypt(data.result, this.judgeLoginType());
+            }).catch(()=>{
+                this.getAccountCallback();
             });
     },
     //后续页面重新赋值
@@ -146,13 +152,10 @@ export default {
         let res = await commonApi.opRequest({
             op: "currentTimeMillis",
         });
-        console.log(res, "--------");
         let data = res.data || null;
-        console.log(data, "***********");
         if (data && data.result) {
             time = data.result;
         }
-        console.log(time);
         return time;
     },
 };

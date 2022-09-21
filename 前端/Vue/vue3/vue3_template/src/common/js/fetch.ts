@@ -30,7 +30,7 @@ instance.interceptors.request.use(
         return config;
     },
     (error) => {
-        commonStore.showLoadingPop(false)
+        commonStore.showLoadingPop(false,true)
         Toast("网络异常，请稍后再试");
         return Promise.reject(error);
     }
@@ -58,9 +58,10 @@ instance.interceptors.response.use(
     },
     (error) => {
         if (error.config.headers.showLoading) {
-            commonStore.showLoadingPop(false)
+            commonStore.showLoadingPop(false,true)
         }
         if (error.response) {
+            console.log(error.response,"-----")
             if (error.response.data && error.response.data.message) {
                 Toast(error.response.data.message);
             } else {
@@ -75,11 +76,19 @@ instance.interceptors.response.use(
                         Toast("无访问权限，请联系企业管理员");
                         break;
                     default:
-                        Toast("系统繁忙，请稍后再试");
+                        if (!navigator.onLine) {
+                            Toast("网络异常，请稍后再试");
+                        }else{
+                            Toast("系统繁忙，请稍后再试");
+                        }
                 }
             }
         } else {
-            Toast("系统繁忙，请稍后再试");
+            if (!navigator.onLine) {
+                Toast("网络异常，请稍后再试");
+            }else{
+                Toast("系统繁忙，请稍后再试");
+            }
         }
         return Promise.reject(error);
     }

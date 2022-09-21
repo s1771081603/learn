@@ -2,6 +2,9 @@
  * 4G 取号登录
  */
 import commonApi from "@/api/common";
+import useCommonStore from "@/store/common";
+const commonStore = useCommonStore();
+import { Toast } from "vant";
 export default {
     data: {
         "2": {
@@ -40,14 +43,19 @@ export default {
         var data = {
             preSign: preSign,
         };
-        commonApi.getSign(data).then((res) => {
-            let data = res.data;
-            if (data.code == 0) {
-                this.getTokenInfo(data.result);
-            } else {
+        commonApi
+            .getSign(data)
+            .then((res) => {
+                let data = res.data;
+                if (data.code == 0) {
+                    this.getTokenInfo(data.result);
+                } else {
+                    this.errorCallBack();
+                }
+            })
+            .catch(() => {
                 this.errorCallBack();
-            }
-        });
+            });
     },
     //拿到YDRZ的token
     getTokenInfo: function (sign) {
@@ -59,21 +67,36 @@ export default {
                 version: config.version,
                 appId: config.appId,
                 sign: sign,
-                openType: "0",
+                openType: "1",
                 expandParams: "",
+                getMsisdnMask: "1",
                 isTest: "1",
             },
             success: function (res) {
-                console.log(res);
+                console.log(res,"-----------");
                 //4、成功返回token,调用后台接口校验token并登录
-                if (res.code === "000000") {
-                    self.tokenValidate(res.token, res.userInformation);
+                if (res.code === "000000" && res.msisdnmask) {
+                    commonStore.setLetLoginPhone(res.msisdnmask);
+                    commonStore.showLetLoginPop(true);
+                    commonStore.showLetBtn(true);
+                    sessionStorage.setItem("letLoginToken", res.token);
+                    sessionStorage.setItem("letLoginUserInformation", res.userInformation);
+                }else{
+                    self.errorCallBack();
+                    if(commonStore.showAutoLoginBtn){
+                        Toast("取号失败");
+                    }
                 }
             },
             error: function (res) {
                 self.errorCallBack();
-                //没有成功获取token，不作处理
-                console.log(res);
+                if(res && res.code == "103111" && commonStore.showAutoLoginBtn){
+                    Toast("当前使用的网络无法自动取号");
+                    commonStore.showLetBtn(false);
+                }else if(commonStore.showAutoLoginBtn){
+                    Toast("取号失败");
+                }
+                console.log(res,"***********")
             },
         });
     },
@@ -85,19 +108,24 @@ export default {
             userInformation: userInformation,
             version: this.data.apiVersion,
         };
-        commonApi.tokenValidate(data).then((res) => {
-            let data = res.data;
-            if (data.code == 0) {
-                this.successCallBack(data);
-            } else {
+        commonApi
+            .tokenValidate(data)
+            .then((res) => {
+                let data = res.data;
+                if (data.code == 0) {
+                    this.successCallBack(data);
+                } else {
+                    this.errorCallBack();
+                }
+            })
+            .catch(() => {
                 this.errorCallBack();
-            }
-        });
+            });
     },
     successCallBack: function (response) {
         // TODO 取号成功回调, 请覆盖该方法
     },
     errorCallBack: function () {
         // 回调, 请覆盖该方法
-    }
+    },
 };

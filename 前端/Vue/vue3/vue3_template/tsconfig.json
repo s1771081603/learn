@@ -14,9 +14,13 @@
     "noImplicitAny":false,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": [ "webpack-env" ],
+    "types": [
+      "webpack-env"
+    ],
     "paths": {
-      "@/*": [ "src/*" ],
+      "@/*": [
+        "src/*"
+      ],
       "@a/*": ["src/assets/*"],
       "@c/*": ["src/components/*"],
       "@v/*": ["src/views/*"],

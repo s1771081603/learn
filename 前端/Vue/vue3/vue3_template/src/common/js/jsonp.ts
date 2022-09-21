@@ -7,7 +7,7 @@ import originJSONP from "jsonp";
 // param3：option对应原始jsonp的第二个参数：opts
 export default function jsonp(url, data, option = {}) {
     // 拼接url时判断是否已有问号
-    url += url.indexOf("?") > -1 ? "&" : "?" + param(data);
+    url += (url.indexOf("?") > -1 ? "&" : "?") + param(data);
     return new Promise((resolve, reject) => {
         originJSONP(url, option, (err, data) => {
             // 如果没错误，就resolve(data)

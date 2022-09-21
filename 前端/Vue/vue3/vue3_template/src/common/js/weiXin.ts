@@ -15,8 +15,10 @@ export default {
         }
     },
     startConfig() {
-        jsonp("https://caiyun.feixin.10086.cn:7071/portal/auth/weixinLogin.action?op=sign4jsonp", {
+        jsonp(`https://caiyun.feixin.10086.cn:7071/portal/auth/weixinLogin.action?op=sign4jsonp`, {
             referer: location.href.split("#")[0] + "",
+        },{
+            prefix: "jQuery_"
         })
             .then((data: any) => {
                 wx.config({
@@ -34,7 +36,7 @@ export default {
             });
     },
     wxShare(data) {
-        var baseUrl = `${location.origin}/portal`;
+        var baseUrl = `${location.origin}/portal/`;
         data.link = baseUrl + "CaiyunAuthServlet?isShare=true&url=" + encodeURIComponent(data.link);
         var imgUrl = data.imgUrl;
         if (imgUrl.indexOf("http") !== 0) {

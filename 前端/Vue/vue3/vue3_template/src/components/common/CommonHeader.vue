@@ -1,4 +1,4 @@
-<!-- 通用header,有样式要改自己在父组件用/deep/ 样式穿透  不行就自己的项目中写一个header不要用这个了 -->
+<!-- 通用header,有样式要改自己在父组件用:deep()样式穿透  不行就自己的项目中写一个header不要用这个了 -->
 <template>
     <div :class="['header',showBgColor?'showBgColor':'']">
         <img class="logo" :src="logoUrl" alt="" />
@@ -8,6 +8,7 @@
         <button class="phoneNum" v-else>
             {{ loginServerNumber.replace(/(\d{3})\d{4}(\d{4})/, '$1****$2') }}
         </button>
+        <button class="changePhone" @click="showLogin" v-if="showChange && loginServerNumber">切换</button>
         <slot></slot>
     </div>
 </template>
@@ -23,6 +24,10 @@ defineProps({
         default: require('@/common/img/logo.png')
     },
     showBgColor: {
+        type: Boolean,
+        default: false
+    },
+    showChange: {
         type: Boolean,
         default: false
     }
@@ -46,6 +51,12 @@ function showLogin() {
     .not_phoneNum,.phoneNum{
         font-size:0.28rem;
         color:#fff;
+        margin-left:auto;
+    }
+    .changePhone{
+        font-size:0.28rem;
+        color:#fff;
+        margin-left:10px;
     }
 }
 </style>

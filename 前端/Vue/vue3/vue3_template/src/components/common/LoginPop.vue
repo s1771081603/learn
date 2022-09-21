@@ -1,17 +1,21 @@
 <template>
     <van-overlay :show="showLogin" z-index="100">
         <div class="login_pop">
-            <p>登录</p>
+            <p class="login_title">{{ titleText }}</p>
             <div class="telephone">
-                <input v-model.trim="phone" type="text" placeholder="请输入手机号" maxlength="11">
+                <span class="icon"></span>
+                <input v-wx-blur v-model.trim="phone" type="text" placeholder="请输入手机号" maxlength="11">
             </div>
             <div class="code">
-                <input v-model.trim="code" type="text" placeholder="请输入验证码" maxlength="6">
+                <span class="icon"></span>
+                <input v-wx-blur v-model.trim="code" type="text" placeholder="请输入验证码" maxlength="6">
                 <button class="getcode" @click="getSmsCode" v-show="time === 0">发送验证码</button>
-                <button class="getcode" v-show="time > 0">重新发送{{ time }}</button>
+                <button class="getcode" v-show="time > 0">重新发送{{ time }}s</button>
             </div>
-            <button class="ok" @click="login">登录</button>
-
+            <button class="ok" @click="login">{{ buttonText }}</button>
+            <p class="letLogin-btn-container" v-if="showAutoLoginBtn && show4GBtn">
+                <span @click="letLogin">一键登录</span>
+            </p>
             <div class="close_btn" @click="commonStore.showLoginPop(false)">
                 <van-icon name="cross" color="#ffffff" />
             </div>
@@ -20,29 +24,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref,defineProps } from 'vue';
-import { storeToRefs } from 'pinia';
+import { ref, defineProps } from 'vue';
 import jsLogin from '@/common/js/login';
-import useCommonStore from '@/store/common';
 import commonApi from '@/api/common';
 import utils from '@/common/js/utils';
 import { useCountDown } from '@/hooks/common/countDown';
-import useCurrentInstance from "@/common/js/useCurrentInstance";
 import logPoint from '@/common/js/logPoint';
-const props = defineProps({ 
-    pointName: {
-        type:String,
-        required:true
-    },
-    marketName: {
-        type:String,
-        required:true
-    },
+import letLoginJs from '@/common/js/letlogin';
+import { publicImport } from '@/hooks/common/publicImport';
+const { commonStore, storeToRefs, proxy } = publicImport();
+const props = withDefaults(defineProps<{
+    pointName: string
+    marketName?: string | null
+    sourceid?: string | null
+    show4GBtn?: boolean   //是否要显示一键登录（前提是showAutoLoginBtn的值也要为true）
+    titleText?: string
+    buttonText?: string
+}>(),{
+    titleText:'登录',
+    buttonText:"登录"
 })
-const { proxy } = useCurrentInstance(); // 获取当前实例
 const { checkPhone, errorMsg } = jsLogin;
-const commonStore = useCommonStore();
-const { showLogin } = storeToRefs(commonStore);
+const { showLogin, showAutoLoginBtn } = storeToRefs(commonStore);
 const phone = ref('');
 const code = ref('');
 const time = ref(0);
@@ -51,8 +54,6 @@ async function getSmsCode() {
         proxy.$toast("请输入正确的手机号码");
         return;
     }
-    time.value = 60;
-    useCountDown(time)
     let encryptTime = await jsLogin.getEncryptTime();
     let encryptData = utils.publicKeyEncrypt({
         userName: phone.value,
@@ -71,6 +72,8 @@ async function getSmsCode() {
             proxy.$toast(message || "系统繁忙，请稍后再试！");
             return;
         }
+        time.value = 60;
+        useCountDown(time)
     })
 }
 async function login() {
@@ -96,9 +99,9 @@ async function login() {
             proxy.$toast("系统繁忙，请稍后再试！");
             return;
         }
-        var code = data.code;
-        if (String(code) !== "0") {
-            let message = errorMsg[code];
+        var rescode = data.code;
+        if (String(rescode) !== "0") {
+            let message = errorMsg[rescode];
             proxy.$toast(message || "系统繁忙，请稍后再试！");
             return;
         }
@@ -106,10 +109,17 @@ async function login() {
         commonStore.setPhone(phone.value);
         commonStore.setLoginState(true);
         //记录登录日志
-        logPoint(`${props.pointName}_user_login`, proxy.sourceid, props.marketName);
+        logPoint(`${props.pointName}_user_login`, props.sourceid, props.marketName);
         commonStore.showLoginPop(false);
+        phone.value = '';
+        code.value = '';
+        time.value = 0;
     })
 
+}
+function letLogin() {
+    commonStore.showLoginPop(false);
+    letLoginJs.getNumber(5);
 }
 
 </script>

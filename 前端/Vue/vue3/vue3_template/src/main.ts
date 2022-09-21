@@ -20,30 +20,9 @@ if (location.href.indexOf("http://wap1") === 0 || process.env.NODE_ENV === "deve
     const vc = new vConsole();
 }
 
-cApp.config.compilerOptions.isCustomElement = (tag) => {
-    return tag.indexOf("wx-open-launch-") === 0;
-};
-//全局变量
+//全局方法
 cApp.config.globalProperties.$base64 = Base64; //base64 .encode  .decode
 cApp.config.globalProperties.$wx = wx;
-cApp.config.globalProperties.sourceid = utils.getHashQueryString("sourceid");
-const ua = navigator.userAgent.toLowerCase();
-let isMp=false,isWeiXin=false;
-cApp.config.globalProperties.isMp = isMp;
-if (ua.match(/MicroMessenger/i) as any == "micromessenger") {
-  isWeiXin = true;
-  wx.miniProgram.getEnv((res) => {
-    if (res.miniprogram) {
-      //true 小程序环境
-      isMp = true;
-      cApp.config.globalProperties.isMp = isMp;
-      // alert("mp");
-    }
-  });
-}
-cApp.config.globalProperties.isWeiXin = isWeiXin;
-let isApp = ua.indexOf("MCloudApp".toLowerCase()) > -1 || ua.indexOf("iOSAmber".toLowerCase()) > -1;
-cApp.config.globalProperties.isApp = isApp;
 
 // 注册全局指令
 Object.keys(directives).forEach((key) => {

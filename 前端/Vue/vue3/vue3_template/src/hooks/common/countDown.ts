@@ -5,11 +5,12 @@ export function useCountDown(time:Ref<number>) {
         clearInterval(timer);
     }
     timer = setInterval(() => {
-        time.value--;
         if (time.value <= 0) {
             if(timer){
                 clearInterval(timer);
             }
+        }else{
+            time.value--;
         }
     }, 1000);
 }

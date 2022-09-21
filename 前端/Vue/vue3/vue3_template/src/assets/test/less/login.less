@@ -1,66 +1,112 @@
-/deep/ #test_login{
+:deep(#test_login) {
     .login_pop {
-        width: 580px;
-        height: 456px;
+        width: 670px;
+        min-height: 840px;
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: #fff;
+        background: linear-gradient(to right, #edf9ff, #fff1fc);
+        background-size: cover;
         border-radius: 10px;
         padding: 0 43px;
-    
-        p {
+
+        .login_title {
             text-align: center;
-            line-height: 60px;
-            margin: 20px 0;
+            line-height: 75px;
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #df6f3d;
+            margin-bottom: 100px;
         }
-    
-        .telephone input {
-            width: 100%;
-            line-height: 70px;
-            font-size: 26px;
-            border-bottom: 1px solid #ebebeb;
-        }
-    
+        .telephone,
         .code {
+            width: 536px;
+            margin: 0 auto;
+            line-height: 90px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            border-bottom: 1px solid #999999;
             margin-top: 30px;
-    
+            .icon {
+                width: 35px;
+                height: 45px;
+                margin-right: 20px;
+            }
             input {
-                width: 287px;
-                line-height: 70px;
+                flex: 1;
+                background: none;
                 font-size: 26px;
-                border-bottom: 1px solid #ebebeb;
             }
-    
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus,
+            input:-webkit-autofill:active {
+                -webkit-transition-delay: 99999s;
+                -webkit-transition: color 99999s ease-out, background-color 99999s ease-out;
+            }
+        }
+        .telephone {
+            .icon {
+                background: url("~@/common/img/icon_phone.png") no-repeat;
+                background-size: 100% 100%;
+            }
+        }
+
+        .code {
+            .icon {
+                background: url("~@/common/img/icon_code.png") no-repeat;
+                background-size: 100% 100%;
+            }
+
             button {
-                width: 185px;
-                height: 70px;
-                background-color: #ffffff;
-                border-radius: 10px;
-                border: solid 2px #1680f6;
-                font-size: 30px;
-                line-height: 70px;
-                color: #1680f6;
+                min-width: 140px;
                 text-align: center;
+                text-align: center;
+                font-size: 26px;
+                font-weight: bold;
+                line-height: 36px;
+                color: #f5472b;
             }
         }
-    
+
         .ok {
-            width: 450px;
-            height: 80px;
-            background-image: linear-gradient(0deg,
-                    #2880ee 0%,
-                    #4ab8fb 100%);
-            border-radius: 40px;
-            border-bottom: 8px solid #1772d8;
-            font-size: 32px;
+            width: 556px;
+            height: 90px;
+            border-radius: 44px;
+            background: linear-gradient(180deg, #ff711c 0%, #ff711c 0%, #ff9a38 100%, #ff9a38 100%);
+            font-size: 30px;
+            font-weight: bold;
+            line-height: 32px;
             color: #ffffff;
-            margin: 49px auto 0;
+            margin: 99px auto 0;
         }
-    
+
+        .letLogin-btn-container {
+            font-size: 0.24rem;
+            color: #1680f6;
+            font-weight: 700;
+            text-align: right;
+            margin: 0.3rem 0 0;
+        }
+
+        .close_btn {
+            position: absolute;
+            left: 50%;
+            bottom: -100px;
+            transform: translate(-50%, 0);
+            width: 70px;
+            height: 70px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 70px;
+            cursor: pointer;
+
+            .van-icon {
+                font-size: 36px;
+            }
+        }
     }
 }

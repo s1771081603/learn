@@ -1,23 +1,25 @@
 <template>
     <div class="${Actname}">
         <common-header :show-bg-color="true"></common-header>
-       
-        <login-pop id="${Actname}_login" :point-name="pointName" :market-name="marketName"></login-pop>
+
+        <login-pop id="${Actname}_login" :point-name="pointName" :market-name="marketName" :sourceid="sourceid">
+        </login-pop>
+        <let-login-pop class="letlogin_4G_pop" id="${Actname}_letlogin"></let-login-pop>
     </div>
 </template>
 <script lang="ts" setup>
 import LoginPop from '@/components/common/LoginPop.vue'; // 登录弹窗组件
+import LetLoginPop from '@/components/common/LetLoginPop.vue'; // 4G授权弹窗组件
 import CommonHeader from '@/components/common/CommonHeader.vue'; //header組件
 import caiyunLogin from '@/common/js/toLogin'; //单点、4G登录方法
-import { nextTick, onMounted, ref } from 'vue';
-import { storeToRefs } from 'pinia';
-import useCommonStore from '@/store/common';
 import api from '@/api/${Actname}' //api接口
-import useCurrentInstance from "@/common/js/useCurrentInstance";
+import { nextTick, onMounted, ref } from 'vue';
 import { init } from '@/common/js/share'  //分享配置  内部也有复制方法可以用，自己引入
-let commonStore = useCommonStore();
+import { publicImport } from "@/hooks/common/publicImport";  //引入一些公关数据方法
+import logPoint from '@/common/js/logPoint';
+const { commonStore, globalStore, storeToRefs, proxy } = publicImport();//commonStore和globalStore是pinia公共数据，storeToRefs是pinia转换store数据为refs数据，proxy是全局实例
 const { loginServerNumber, isLogin } = storeToRefs(commonStore);
-const { proxy } = useCurrentInstance(); // 获取当前实例
+const { sourceid, isMp, isWeiXin, isApp } = storeToRefs(globalStore);
 const pointName = "national_${Actname}";
 const marketName = "marketName_${Actname}";//随意写的值，方便全局替换，记得替换，没有就改成空字符串
 
@@ -26,7 +28,7 @@ onMounted(() => {
         caiyunLogin({
             pointName,
             marketName,
-            sourceid: proxy.sourceid
+            sourceid: sourceid.value
         }).then(res => { }).catch(err => { })
     }
     nextTick(() => {
@@ -40,7 +42,7 @@ function initShare() {
     let desc = "iii";
     let imgUrl = `${location.origin}/portal/vue3_template/${require("@/common/img/wx_share.jpg")}`;//记得改，写完整的链接
     let miniImgUrl = `${location.origin}/portal/vue3_template/${require("@/common/img/wx_share.jpg")}`;//记得改，写完整的链接
-    let link = `${location.origin}/portal/vue3_template/index.html?path=${Actname}&sourceid=${proxy.sourceid}`;//记得改，写完整的链接
+    let link = `${location.origin}/portal/vue3_template/index.html?path=${Actname}&sourceid=${sourceid.value}`;//记得改，写完整的链接
     let wxOptions = {
         title,
         desc,
@@ -58,6 +60,7 @@ function initShare() {
 
 </script>
 <style lang="less" scoped>
-    @import '~@/assets/${Actname}/less/login.less';
-    @import '~@/assets/${Actname}/less/${name}.less';
+@import '~@/assets/${Actname}/less/letlogin.less';
+@import '~@/assets/${Actname}/less/login.less';
+@import '~@/assets/${Actname}/less/${name}.less';
 </style>

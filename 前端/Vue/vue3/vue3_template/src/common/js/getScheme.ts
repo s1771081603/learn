@@ -2,6 +2,7 @@
     * 跳转小程序获得scheme链接
 */
 import commonApi from "@/api/common";
+import utils from "./utils";
 
 export default {
     code: 0,
@@ -17,7 +18,7 @@ export default {
     }
   */
     getScheme(obj) {
-        obj.phone = obj.phone ? this.publicKeyEncrypt(obj.phone) : "";
+        obj.phone = obj.phone ? utils.publicKeyEncrypt(obj.phone) : "";
         return new Promise((resolve, reject) => {
             commonApi
                 .getScheme(obj)

@@ -24,7 +24,7 @@ readline.question(`输入要加路由的活动名称(目录名称)：`, (ActName
         fs.writeFileSync(`./src/views/${ActName}/${name}.vue`, data);
         fs.writeFileSync(`./src/assets/${ActName}/less/${name}.less`, "");
         // 路由
-        let routerinnerData = `const ${name} = () => import(/* webpackChunkName: "${name}" */'@/views/${ActName}/${name}.vue')`;
+        let routerinnerData = `const ${name} = () => import(/* webpackChunkName: "${ActName}" */'@/views/${ActName}/${name}.vue')`;
         let routerEndData = `,
     {
         path: '/${name}',

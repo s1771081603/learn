@@ -28,6 +28,12 @@ readline.question(`输入新活动名称(目录名称)：`, (name) => {
             .toString()
             .replace(/\$\{name\}/g, name)
     );
+    //4G登录弹窗样式
+    fs.writeFileSync(`./src/assets/${name}/less/letlogin.less`,`@import "~@/common/less/letLogin.less";
+//可删除上面的引用 在下面自定义
+:deep(#${name}_letlogin){
+
+}`);
     //路由
     let routerinnerData = `const ${name} = () => import(/* webpackChunkName: "${name}" */ '@/views/${name}/${name}.vue');
 export default [

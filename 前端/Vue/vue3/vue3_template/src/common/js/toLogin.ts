@@ -8,8 +8,8 @@ import logPoint from "./logPoint";
 const commonStore = useCommonStore();
 interface params {
     pointName: string;
-    sourceid: string;
-    marketName: string;
+    sourceid?: string|null;
+    marketName?: string|null;
 }
 function toLogin(options: params) {
     return new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ function toLogin(options: params) {
             letLoginJs.successCallBack = function (data) {
                 var phone = data.result.msisdn;
                 if (phone.length === 11) {
-                    commonStore.setPhone(account);
+                    commonStore.setPhone(phone);
                     commonStore.setLoginState(true);
                     sensors.putPhoneNumberInfo(phone);
                     logPoint(`${pointName}_4G`, sourceid, marketName);

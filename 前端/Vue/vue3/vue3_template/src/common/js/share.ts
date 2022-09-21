@@ -3,18 +3,17 @@ import weiXin from "./weiXin";
 import useCurrentInstance from "@/common/js/useCurrentInstance";
 import ClipboardJS from "clipboard";
 import wx from "weixin-js-sdk";
-
 type shareOptions = {
     title: string;
     desc?: string;
     link: string;
     imgUrl: string;
 };
-const wxShare = (options: shareOptions, miniOptions: shareOptions) => {
+const wxShare = (options: shareOptions, miniOptions?: shareOptions) => {
     if (weiXin.isQQ() || weiXin.isWeiXin()) {
         weiXin.wxShare(options);
-        if (weiXin.isWeiXin()) {
-            wx.postMessage({
+        if (weiXin.isWeiXin() && miniOptions) {
+            wx.miniProgram.postMessage({
                 data: miniOptions,
             });
         }
@@ -53,6 +52,7 @@ const clickAppShare = (options) => {
         }, 1800);
     }
 };
+//这边的复制方法多执行一次点击事件，若有影响，不要用该方法，自己写到页面上
 let timer:number|null = null;
 const cliboardShare = (text,event) => {
     let clipboard = new ClipboardJS(event.target, {
@@ -82,9 +82,11 @@ const cliboardShare = (text,event) => {
     });
 };
 
-const init = ({ wxOptions, miniOptions, appOptions }) => {
-    wxShare(wxOptions, miniOptions);
-    appShare(appOptions);
+const init = (options:{ wxOptions?, miniOptions?, appOptions? }) => {
+    wxShare(options.wxOptions, options.miniOptions);
+    if(options.appOptions){
+        appShare(options.appOptions);
+    }
 };
 
 

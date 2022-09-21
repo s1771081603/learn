@@ -1,8 +1,41 @@
 const path = require("path");
 const CompressionPlugin = require("compression-webpack-plugin");
-const FileManagerPlugin = require("filemanager-webpack-plugin");
-const { VantResolver } = require("unplugin-vue-components/resolvers");
+const FileManagerPlugin = require("./plugins/filemanager-webpack-plugin.cjs");
+const {
+  VantResolver
+} = require("unplugin-vue-components/resolvers");
 const ComponentsPlugin = require("unplugin-vue-components/webpack");
+const deploy = require('./publish/index.js');
+
+const configureArr = [
+  ComponentsPlugin({
+    resolvers: [VantResolver()],
+  }),
+  new CompressionPlugin({
+    test: /\.js$|\.html$|\.css/,
+    threshold: 10240,
+  }),
+  new FileManagerPlugin({
+    events: {
+      onEnd: {
+        delete: ["./portal.zip"],
+        archive: [{
+          source: "./dist",
+          destination: "./portal.zip",
+          callback: () => {
+            if (JSON.parse(process.env.npm_config_argv).cooked.includes("deploy")) {
+              deploy.init();
+            }
+
+          }
+        }],
+      },
+    },
+  })
+]
+
+
+
 
 module.exports = {
   chainWebpack: (config) => {
@@ -29,10 +62,23 @@ module.exports = {
           },
         },
       });
+
+    config.module
+      .rule("vue")
+      .use("vue-loader")
+      .tap((options) => ({
+        ...options,
+        compilerOptions: {
+          // 忽略自定义标签警告 vue3 app.config.compilerOptions.isCustomElement 配置有问题
+          isCustomElement: (tag) => {
+            return tag.indexOf("wx-open-launch-") === 0;
+          },
+        }
+      }));
   },
-  configureWebpack:{
-    resolve:{
-      extensions: [".ts",".tsx",".js", ".vue", ".json", ".css", ".less"],
+  configureWebpack: {
+    resolve: {
+      extensions: [".ts", ".tsx", ".js", ".vue", ".json", ".css", ".less"],
       alias: {
         "@": path.resolve(__dirname, "./src"),
         "@a": path.resolve(__dirname, "./src/assets"),
@@ -41,23 +87,7 @@ module.exports = {
         "@api": path.resolve(__dirname, "./src/api"),
       },
     },
-    plugins:process.env.NODE_ENV === 'production' ?[
-      ComponentsPlugin({
-        resolvers: [VantResolver()],
-      }),
-      new CompressionPlugin({
-        test: /\.js$|\.html$|\.css/,
-        threshold: 10240,
-      }),
-      new FileManagerPlugin({
-        events: {
-          onEnd: {
-            delete: ["./portal.zip"],
-            archive: [{ source: "./dist", destination: "./portal.zip" }],
-          },
-        },
-      })
-    ] : [
+    plugins: process.env.NODE_ENV === 'production' ? configureArr : [
       ComponentsPlugin({
         resolvers: [VantResolver()],
       })
@@ -108,13 +138,5 @@ module.exports = {
         },
       },
     },
-  },
-  pluginOptions: {
-    "style-resources-loader": {
-      preProcessor: "less",
-      patterns: [
-        path.resolve(__dirname, "./src/common/less/general.less")
-      ],
-    },
-  },
+  }
 };
