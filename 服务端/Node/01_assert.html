@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>assert测试</h1>
+  <p>该 node:assert 模块提供了一组用于验证不变量的assert函数。</p>
+  <h1>严格的 assert 模式</h1>
+  <p>
+    在严格 assert 模式下，非严格方法的行为与其对应的严格方法相似。例如，assert.deepEqual()将表现得像 assert.deepStrictEqual(). <br>
+    在严格 assert 模式下，对象的错误消息会显示差异。在遗留 assert 模式中，对象的错误消息会显示对象，通常会被截断。
+  </p>
+</body>
+<script>
+  // 使用严格断言模式：
+  import { strict as assert } from 'assert';
+  // const assert = require('node:assert/strict');
+  assert.deepEqual([[[1, 2, 3]], 4, 5], [[[1, 2, '3']], 4, 5]);
+</script>
+</html>

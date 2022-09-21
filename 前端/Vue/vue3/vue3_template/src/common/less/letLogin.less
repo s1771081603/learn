@@ -1,0 +1,181 @@
+:deep(.letlogin_4G_pop){
+    .letlogin-mask {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+    }
+    
+    .letlogin-pop {
+        width: 6.5rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        padding: 0.8rem 0.3rem 0.3rem;
+        border-radius: 0.25rem;
+    }
+    
+    .letlogin-title {
+        text-align: center;
+        font-size: 0.4rem;
+        margin: 0 0 0.45rem 0;
+    }
+    
+    .letlogin-phone {
+        text-align: center;
+        font-size: 0.4rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .letlogin-tips {
+        text-align: center;
+        font-size: 0.24rem;
+        color: #aaaaaa;
+    }
+    
+    .login-4g-btn {
+        width: 4.37rem;
+        height: 0.63rem;
+        background-color: #3385ff;
+        border-radius: 0.1rem;
+        margin: 0.23rem auto 0.4rem;
+        font-size: 0.36rem;
+        color: #fff;
+        display: block;
+        letter-spacing: 0.1rem;
+    }
+    
+    .clause {
+        font-size: 0.2rem;
+        text-align: center;
+    }
+    
+    .agree-pop .clause {
+        font-size: 0.28rem;
+    }
+    
+    .clause input {
+        vertical-align: center;
+        height: 0.24rem;
+        width: 0.24rem;
+        margin-top: 0;
+    }
+    
+    .clause span {
+        color: #488ffa;
+    }
+    
+    .clause a:visited {
+        color: #3085f8;
+    }
+    
+    .message-login-btn {
+        font-size: 0.24rem;
+        color: #479eff;
+        font-weight: 700;
+        text-align: right;
+        margin: 0.6rem 0 0;
+    }
+    
+    .close {
+        height: 0.4rem;
+        width: 0.4rem;
+        border-radius: 50%;
+        position: absolute;
+        top: 0.3rem;
+        right: 0.3rem;
+        background-color: transparent;
+        /* border: solid 0.03rem #f5a750; */
+        cursor: pointer;
+        position: absolute;
+    }
+    
+    .close::after {
+        background-color: #000;
+        height: 0.03rem;
+        width: 0.32rem;
+        content: "";
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        position: absolute;
+    }
+    
+    .close::before {
+        background-color: #000;
+        height: 0.32rem;
+        width: 0.03rem;
+        content: "";
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(45deg);
+        position: absolute;
+    }
+    
+    .pop-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 0.25rem;
+    }
+    
+    .agree-pop {
+        width: 6.5rem;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        padding: 1.35rem 0.3rem 0.75rem;
+        border-radius: 0.25rem;
+    }
+    
+    .accept-btn {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 0.6rem 0 0;
+    }
+    
+    .accept-btn button {
+        border-radius: 0.1rem;
+        font-size: 0.36rem;
+        line-height: 0.86rem;
+        min-width: 1rem;
+        height: 0.86rem;
+        padding: 0 0.3rem 0;
+    }
+    
+    .no-accept {
+        background-color: #ffffff;
+        border: solid 0.01rem #aaaaaa;
+        color: #666666;
+    }
+    
+    .is-accept {
+        background-color: #3385ff;
+        border-radius: 0.1rem;
+        color: #fff;
+    }
+    
+    // 遮罩层动画
+    .mask-ani-enter-active,
+    .mask-ani-leave-active {
+        transition: opacity 0.3s;
+    }
+    
+    .mask-ani-enter,
+    .mask-ani-leave-to {
+        opacity: 0;
+    }
+}
