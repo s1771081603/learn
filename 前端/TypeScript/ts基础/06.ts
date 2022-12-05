@@ -4,7 +4,7 @@ str02 = undefined;
 str02 = 'songlisheng';
 
 let el01:HTMLDivElement = document. querySelector('.box01') as HTMLDivElement;
-let el02:HTMLDivElement = document. querySelector('.box02')!;
+let el02:HTMLDivElement = document. querySelector('.box02') as HTMLDivElement;
 el01.innerHTML = 'this is an not null as test';
 el02.innerHTML = 'this is an not null as test';
 
