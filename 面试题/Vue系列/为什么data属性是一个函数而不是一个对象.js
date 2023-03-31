@@ -45,12 +45,12 @@ Component02.prototype.data = function () {
   return { count: 0 }
 }
 // 创建两个组件实例
-const componentA = new Component01()
-const componentB = new Component01()
+const componentC = new Component01()
+const componentD = new Component01()
 // 修改 componentA 组件 data 属性的值，componentB 中的值不受影响。
-console.log(componentB.data.count)  // 0
+console.log(componentD.data.count)  // 0
 componentA.data.count = 1
-console.log(componentB.data.count)  // 0
+console.log(componentD.data.count)  // 0
 // vue 组件可能会有很多个实例，采用函数返回一个全新 data 形式，
 // 使每个实例对象的数据不会受到其他实例对象数据的污染。
 
