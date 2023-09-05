@@ -8,32 +8,32 @@
       <li>内部基于 ES6 的 Proxy 实现的，通过代理对象操作对象内部数据进行操作。</li>
     </ol>
   </div>
-  
+
   <div>
     <h1>{{ person.name }}的信息</h1>
     <h2>姓名：{{ person.name }}</h2>
     <h2>年龄：{{ person.age }}</h2>
     <h2>职业：{{ person.type }}</h2>
     <h2>薪资：{{ person.salary }}</h2>
-    <h2 >爱好：<span v-for="i in person.hobby">{{ i }} &nbsp;</span></h2>
+    <h2>爱好：<span v-for="i in person.hobby">{{ i }} &nbsp;</span></h2>
     <button @click="changInfo">修改{{ person.name }}的信息</button>
   </div>
 </template>
 
 <script>
-import { reactive } from 'vue';
+import { reactive } from 'vue'
 
 export default {
   name: 'APP',
-  
-  setup(){
+
+  setup() {
 
     let person = reactive({
       name: '宋利生',
       age: 26,
-      type:'前端工程师',
+      type: '前端工程师',
       salary: '15K',
-      hobby: ['打游戏','睡觉']
+      hobby: ['打游戏', '睡觉'],
     })
 
     function changInfo() {
@@ -50,10 +50,10 @@ export default {
       }
     }
 
-    return{
+    return {
       person,
-      changInfo
+      changInfo,
     }
-  }
+  },
 }
 </script>
