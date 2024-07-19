@@ -16,7 +16,7 @@ const fs = require('fs');
 // })
 
 // 异步读取文件
-// fs.readFile(__dirname + '/异步目录/file01.txt', (err, data) => {
+// fs.readFile(__dirname + '/异步目录/file01.txt', 'utf-8', (err, data) => {
 //   if (err) return console.log(err);
 //   console.log('异步读取文件:' + data);
 //   const newStr = data.toString().replace(/=/g, ':').replace(/ /g, '\n')
