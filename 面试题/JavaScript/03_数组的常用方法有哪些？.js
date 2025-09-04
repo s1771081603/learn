@@ -30,3 +30,38 @@
  *      17.filter() // 对数组每一项都运行传入的函数，函数返回 true 的项会组成数组之后返回，不会影响原数组
  *      18.map() // 对数组每一项都运行传入的函数，返回由每次函数调用的结果构成的数组，不会影响原数组
  * */
+
+/**
+ * 遍历数组的方法：
+ *    1.for 循环 可中断循环，遍历内容通过 arr[i] 获取
+ *    2.for...in 循环 可中断循环，遍历内容通过 arr[key] 获取
+ *    3.for...of 循环 可中断循环，遍历内容通过 arrItem 获取
+ *    4.forEach() 方法
+ *    5.map() 方法
+ *    6.filter() 方法
+ *    7.some() 方法
+ *    8.every() 方法
+ *    9.reduce() 方法
+ *    10.reduceRight() 方法
+ */
+const fruits = ['apple', 'banana', 'orange'];
+
+// 传统 for 循环
+for (let i = 0; i < fruits.length; i++) {
+  console.log(`${i}: ${fruits[i]}`);
+}
+
+// for...in (注意获取的是索引)
+for (let index in fruits) {
+  console.log(`${index}: ${fruits[index]}`);
+}
+
+// for...of (直接获取值)
+for (let fruit of fruits) {
+  console.log(fruit);
+}
+
+// forEach
+fruits.forEach((fruit, index) => {
+  console.log(`${index}: ${fruit}`);
+});

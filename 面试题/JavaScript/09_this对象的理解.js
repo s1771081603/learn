@@ -18,3 +18,26 @@
  *          apply()、call()、bind()是函数的一个方法，作用是改变函数的调用对象。
  * 优先级：new绑定 > 显示绑定 > 隐式绑定 > 默认绑定
  */
+
+/**
+ * call()、apply() 和 bind() 都是 JavaScript 中用于改变函数执行上下文（this 值）的方法，但它们在使用方式和行为上有一些关键区别：
+ * 1. call() 方法：
+ *     立即调用函数，并且可以传递多个参数。
+ *        参数：thisArg：函数运行时的 this 值。
+ *              arg1, arg2, ...：传递给函数的参数列表。
+ *        语法：functionName.call(thisArg, arg1, arg2, ...)
+ * 2. apply() 方法：
+ *     立即调用函数，但参数必须以数组形式传递。
+ *        参数：thisArg：函数运行时的 this 值。
+ *              argsArray：一个数组或类数组对象，包含传递给函数的参数。
+ *        语法：functionName.apply(thisArg, [arg1, arg2, ...])
+ * 3. bind() 方法：
+ *      不会立即调用函数，而是返回一个新的函数，这个新函数的 this 绑定的 this 值。
+ *        参数：thisArg：函数运行时的 this 值。
+ *              arg1, arg2, ...：传递给函数的参数列表（可选）。
+ *        语法：functionName.bind(thisArg[, arg1, arg2, ...])
+ * 4. 总结：
+ *      call() 和 apply() 都是立即调用函数，并且可以改变函数的 this 绑定方式，区别在于参数传递方式不同。
+ *      bind() 则是返回一个新的函数，允许稍后调用，并且 this 绑定不会改变。
+ *      选择使用哪一个方法取决于具体的需求和场景。
+*/
