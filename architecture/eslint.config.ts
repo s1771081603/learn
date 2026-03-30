@@ -20,6 +20,15 @@ export default defineConfigWithVueTs(
     ...pluginVue.configs['flat/essential'],
     vueTsConfigs.recommended,
 
+    // Vue 组件命名规范：允许单组件名
+    {
+        name: 'app/vue-component-naming',
+        files: ['**/*.vue'],
+        rules: {
+            'vue/multi-word-component-names': 'off' // 允许单个单词的组件名
+        }
+    },
+
     ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
 
     skipFormatting
