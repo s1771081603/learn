@@ -8,12 +8,19 @@
         "vue"
     ],
     "env": {
-        "browser": true
+        "browser": true,
+        "node": true
     },
     "categories": {
-        "correctness": "error"
+        "correctness": "error",
+        "perf": "warn",
+        "suspicious": "warn"
     },
     "rules": {
-        "vue/no-useless-assignment": "off"
+        "vue/no-useless-assignment": "off",
+        "no-console": "off",
+        "no-debugger": "off",
+        "typescript/no-explicit-any": "warn",
+        "unicorn/prefer-module": "off"
     }
 }

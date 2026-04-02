@@ -1,0 +1,14 @@
+{
+    "indentWidth": 4,
+    "useTabs": false,
+    "lineWidth": 100,
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "trailingComma": "none",
+    "semi": false,
+    "quoteStyle": "single",
+    "jsxBracketSameLine": false,
+    "vueIndentScriptAndStyle": true,
+    "include": ["src/**/*.{ts,tsx,vue,js,jsx}"],
+    "exclude": ["node_modules", "dist", "coverage"]
+}
