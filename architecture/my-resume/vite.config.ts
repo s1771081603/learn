@@ -1,11 +1,13 @@
-import { defineConfig } from 'vite'
+import { defineConfig,loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'path'
 import federation from '@originjs/vite-plugin-federation'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({mode}) => {
+  const env = loadEnv(mode, process.cwd(), '')
+  return {
   plugins: [
     vue(),
     tailwindcss(),
@@ -13,17 +15,12 @@ export default defineConfig({
       name: 'my-resume',
       filename: 'remoteEntry.js',
       exposes: {
-        './App': resolve(__dirname, 'src/App.vue')
+        './App': './src/views/HomeView.vue'
       },
       remotes: {
-        main: `${process.env.VITE_MAIN_URL || 'http://localhost:3000'}/remoteEntry.js`,
-        'common-components': `${process.env.VITE_COMMON_COMPONENTS_URL || 'http://localhost:3001'}/remoteEntry.js`
+        'main': `${env.VITE_MAIN_URL}/remoteEntry.js`,
       },
-      shared: {
-        vue: {
-          requiredVersion: '^3.5.0'
-        }
-      }
+      shared: ['vue', 'vue-router']
     })
   ],
   resolve: {
@@ -33,13 +30,15 @@ export default defineConfig({
   },
   server: {
     port: 3002,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3001',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
+    cors: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
     }
   },
-  build: { target: 'esnext' }
+  build: { 
+    target: 'esnext',
+    minify: false,
+    cssCodeSplit: false
+  }
+}
 })
